@@ -8,6 +8,7 @@ let operator;
 let pressed2 = false;
 let var1;
 lastInputIsOperator = false;
+let EnterPressed = false;
 
 
 let tiles = document.querySelectorAll(".tile, .CC, img, .Enter, .zero, .one, .op")
@@ -64,6 +65,10 @@ let Enter = document.querySelector(".Enter")
 //The Code for assigning values to num1 and num2 and selecting the operator, when the operator is pressed it declares a variable true which is important for future calculations 
 numbers.forEach(number => {
     number.addEventListener("click", () => {
+    
+    if (EnterPressed) {
+        return
+    }
 
     if (Operator_Pressed == false) {
     screen.textContent += number.textContent.trim();
@@ -78,6 +83,8 @@ numbers.forEach(number => {
     num2 = parseInt(number2.replace(/\s/g, ""));
     pressed2 = true;
     }
+
+     
 
     }
 )})
@@ -101,6 +108,8 @@ ops.forEach(op => {
         screen.textContent += op.textContent;
         screen.style.color = "white" 
         operator = op.textContent
+        EnterPressed = false; 
+        
     })
 })
     
@@ -113,6 +122,7 @@ Clear.addEventListener("click", () => {
     clear();
     Operator_Pressed = false;
     pressed2 = false;
+    EnterPressed = false;
 })
 
 //The code for when you press enter 
@@ -122,8 +132,11 @@ Enter.addEventListener("click", () => {
     number2 = "0";
     num1 = var1;
     pressed2 = false;
+    EnterPressed = true;
     }})
 
+
+//add that if a number is pressed after enter has been pressed, reset all variables and resume as normal
 
 
 
