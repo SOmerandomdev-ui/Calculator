@@ -7,6 +7,8 @@ let time = 0;
 let operator;
 let pressed2 = false;
 let var1;
+lastInputIsOperator = false;
+
 
 let tiles = document.querySelectorAll(".tile, .CC, img, .Enter, .zero, .one, .op")
 
@@ -82,27 +84,27 @@ numbers.forEach(number => {
 
 ops.forEach(op => {
     op.addEventListener("click", () => {
-        Operator_Pressed = true;
-        if (Operator_Pressed == true) {
-            screen.textContent += op.textContent;
-            screen.style.color = "white" 
+
+        let lastChar = screen.textContent.trim().slice(-1);
+        const operatorSet = ["+", "-", "*", "/"];
+        if (operatorSet.includes(lastChar)) {
+            return;
         }
-            
-        
-        
+
+        Operator_Pressed = true;
         if (Operator_Pressed && pressed2) {
             operate(num1, num2, operator)
-            screen.textContent += op.textContent;
-            screen.style.color = "white" 
             number2 = "0";
             num1 = var1;
         }
-
-        operator = op.textContent
-
         
+        screen.textContent += op.textContent;
+        screen.style.color = "white" 
+        operator = op.textContent
     })
 })
+    
+
 
 
 //The code for when you press CC
@@ -115,11 +117,12 @@ Clear.addEventListener("click", () => {
 
 //The code for when you press enter 
 Enter.addEventListener("click", () => {
+    if (num1 && num2 && operator) {
     operate(num1, num2, operator)
     number2 = "0";
     num1 = var1;
     pressed2 = false;
-    }) 
+    }})
 
 
 
